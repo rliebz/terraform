@@ -17,7 +17,10 @@ type ValidateCommand struct {
 const defaultPath = "."
 
 func (c *ValidateCommand) Run(args []string) int {
-	args = c.Meta.process(args, false)
+	args, err := c.Meta.process(args, false)
+	if err != nil {
+		return 1
+	}
 	var dirPath string
 
 	cmdFlags := flag.NewFlagSet("validate", flag.ContinueOnError)

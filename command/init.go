@@ -33,7 +33,10 @@ func (c *InitCommand) Run(args []string) int {
 	var flagBackend, flagGet, flagGetPlugins, flagUpgrade bool
 	var flagConfigExtra map[string]interface{}
 
-	args = c.Meta.process(args, false)
+	args, err := c.Meta.process(args, false)
+	if err != nil {
+		return 1
+	}
 	cmdFlags := c.flagSet("init")
 	cmdFlags.BoolVar(&flagBackend, "backend", true, "")
 	cmdFlags.Var((*variables.FlagAny)(&flagConfigExtra), "backend-config", "")
